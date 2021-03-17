@@ -64,6 +64,13 @@ pub enum Tag {
     /// 6th bit (i.e. `0x20`) set.
     Sequence = 0x10 | CONSTRUCTED_FLAG,
 
+    /// `Set` tag.
+    ///
+    /// Note that the universal tag number for `Set` is technically `0x11`
+    /// however we presently only support the constructed form, which has the
+    /// 6th bit (i.e. `0x20`) set.
+    Set = 0x11 | CONSTRUCTED_FLAG,
+
     /// Context-specific tag (0) unique to a particular structure.
     ContextSpecific0 = 0 | CONTEXT_SPECIFIC_FLAG | CONSTRUCTED_FLAG,
 
@@ -94,6 +101,7 @@ impl TryFrom<u8> for Tag {
             0x17 => Ok(Tag::UtcTime),
             0x18 => Ok(Tag::GeneralizedTime),
             0x30 => Ok(Tag::Sequence),
+            0x31 => Ok(Tag::Set),
             0xA0 => Ok(Tag::ContextSpecific0),
             0xA1 => Ok(Tag::ContextSpecific1),
             0xA2 => Ok(Tag::ContextSpecific2),
@@ -134,6 +142,7 @@ impl Tag {
             Self::UtcTime => "UTCTime",
             Self::GeneralizedTime => "GeneralizedTime",
             Self::Sequence => "SEQUENCE",
+            Self::Set => "SET",
             Self::ContextSpecific0 => "Context Specific 0",
             Self::ContextSpecific1 => "Context Specific 1",
             Self::ContextSpecific2 => "Context Specific 2",
